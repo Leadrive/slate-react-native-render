@@ -4,6 +4,7 @@
   "devDependencies": {
     "@types/node": "^7.0.8"
   },
+
   "dependencies": {
     "react": "^16.0.0-alpha.12",
     "slate": "^0.21.4"
