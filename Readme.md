@@ -8,6 +8,7 @@ Example:
     <div class="container">
      import {RNHtml} from "../src/RNHtml";
      import {Raw} from '../src/Raw'
+     import {Text} from 'react-native'
 
      const editorStateObj = {"document":{"data":{},"kind":"document","nodes":[{"data":{},"kind":"block","isVoid":false,"type":"numbered-list","nodes":[{"data":{},"kind":"block","isVoid":false,"type":"list-item","nodes":[{"kind":"text","ranges":[{"kind":"range","text":"gdfgdffgdfdgfdg","marks":[]}]}]},{"data":{},"kind":"block","isVoid":false,"type":"list-item","nodes":[{"kind":"text","ranges":[{"kind":"range","text":"gfdgfdgfddfggdffdg","marks":[]}]}]}]}]},"kind":"state"}
      const rules = [
@@ -24,7 +25,7 @@ Example:
          // Add a serializing function property to our rule...
          serialize(object, children) {
            if (object.kind == 'block' && object.type == 'paragraph') {
-             return <p>{children}</p>
+             return <Text>{children}</Text>
            }
          }
        }
