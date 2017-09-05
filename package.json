@@ -1,5 +1,5 @@
 {
-  "name": "socket-package",
+  "name": "slate-react-native-render",
   "version": "1.0.0",
   "devDependencies": {
     "@types/node": "^7.0.8"
