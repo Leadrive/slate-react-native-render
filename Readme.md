@@ -1,4 +1,4 @@
-Slate.js(https://github.com/ianstormtaylor/slate) requires react-dom, which is a headache if you want to render the saved editor state into react native views with the Html serializers. This package extract the Html and Raw serializers, removes the requirement of react-dom to make them compatiable with react-native.
+Slate.js(https://github.com/ianstormtaylor/slate) requires react-dom, which is a headache if you want to render saved editor states into react native views with the Html serializers. This package extract the Html and Raw serializers, removes the requirement of react-dom to make them compatiable with react-native.
 
 Example:
 
