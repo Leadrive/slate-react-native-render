@@ -1,0 +1,2 @@
+This package includes the modified Html and Raw serializers from slate.js to make them compatiable with react-native.
+If you store the entire editor state to the database, these two modified serializers allow you to render the views in react native.
