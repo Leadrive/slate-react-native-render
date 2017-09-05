@@ -3,13 +3,34 @@ Slate.js(https://github.com/ianstormtaylor/slate) requires react-dom, which is a
 Example:
 
 
+
 <pre>
     <div class="container">
      import {RNHtml} from "../src/RNHtml";
      import {Raw} from '../src/Raw'
 
      const editorStateObj = {"document":{"data":{},"kind":"document","nodes":[{"data":{},"kind":"block","isVoid":false,"type":"numbered-list","nodes":[{"data":{},"kind":"block","isVoid":false,"type":"list-item","nodes":[{"kind":"text","ranges":[{"kind":"range","text":"gdfgdffgdfdgfdg","marks":[]}]}]},{"data":{},"kind":"block","isVoid":false,"type":"list-item","nodes":[{"kind":"text","ranges":[{"kind":"range","text":"gfdgfdgfddfggdffdg","marks":[]}]}]}]}]},"kind":"state"}
+     const rules = [
+       {
+         deserialize(el, next) {
+           if (el.tagName.toLowerCase() == 'p') {
+             return {
+               kind: 'block',
+               type: 'paragraph',
+               nodes: next(el.childNodes)
+             }
+           }
+         },
+         // Add a serializing function property to our rule...
+         serialize(object, children) {
+           if (object.kind == 'block' && object.type == 'paragraph') {
+             return <p>{children}</p>
+           }
+         }
+       }
+     ]
      const htmlSerializer = new RNHtml(rules);
+
      export class RichTextComponent extends React.Component {
          public render() {
              let editorState = Raw.deserialize(JSON.parse(editorStateObj), {terse: true});
