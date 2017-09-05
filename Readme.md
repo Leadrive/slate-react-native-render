@@ -16,7 +16,7 @@ Example:
          // Add a serializing function property to our rule...
          serialize(object, children) {
            if (object.kind == 'block' && object.type == 'paragraph') {
-             return &lt;Text&gt;{children}&lt;/Text&gt;\
+             return &lt;Text&gt;{children}&lt;/Text&gt;
            }
          }
        }
