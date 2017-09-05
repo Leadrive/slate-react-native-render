@@ -13,19 +13,10 @@ Example:
      const editorStateObj = {"document":{"data":{},"kind":"document","nodes":[{"data":{},"kind":"block","isVoid":false,"type":"numbered-list","nodes":[{"data":{},"kind":"block","isVoid":false,"type":"list-item","nodes":[{"kind":"text","ranges":[{"kind":"range","text":"gdfgdffgdfdgfdg","marks":[]}]}]},{"data":{},"kind":"block","isVoid":false,"type":"list-item","nodes":[{"kind":"text","ranges":[{"kind":"range","text":"gfdgfdgfddfggdffdg","marks":[]}]}]}]}]},"kind":"state"}
      const rules = [
        {
-         deserialize(el, next) {
-           if (el.tagName.toLowerCase() == 'p') {
-             return {
-               kind: 'block',
-               type: 'paragraph',
-               nodes: next(el.childNodes)
-             }
-           }
-         },
          // Add a serializing function property to our rule...
          serialize(object, children) {
            if (object.kind == 'block' && object.type == 'paragraph') {
-             return <Text>{children}</Text>
+             return \<Text>{children}</Text>\
            }
          }
        }
