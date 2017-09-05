@@ -5,12 +5,11 @@ let StringRecord = new immutable.Record({
     text: ''
 });
 
-
 let key = 0;
+
 function addKey(element) {
     return React.cloneElement(element, {key: key++});
 }
-
 
 export class RNHtml{
     private rules:any[] = [];
