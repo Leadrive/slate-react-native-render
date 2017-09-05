@@ -1,9 +1,3 @@
-Slate.js(https://github.com/ianstormtaylor/slate) requires react-dom, which is a headache if you want to use the Html serializers to render react native views. This package removes the requirement of react-dom to make Html and Raw serializers compatiable with react-native.
-
-If you store the entire editor state to the database, these two modified serializers allow you to render the views in react native.
-
-Example:
-
 ```html
 <h2>Example of code</h2>
 
