@@ -15,6 +15,7 @@
   "author": "Chung",
   "license": "MIT",
   "main": "index.js",
+  "types": "index.d.ts",
   "scripts": {
     "test": "test"
   },
