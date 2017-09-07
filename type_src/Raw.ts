@@ -1,20 +1,15 @@
-
-
-import Block from '../node_modules/slate/lib/models/block'
-import Character from '../node_modules/slate/lib/models/character'
-import Document from '../node_modules/slate/lib/models/document'
-import Inline from '../node_modules/slate/lib/models/inline'
-import Mark from '../node_modules/slate/lib/models/mark'
-import Selection from '../node_modules/slate/lib/models/selection'
-import State from '../node_modules/slate/lib/models/state'
-import Text from '../node_modules/slate/lib/models/text'
-
-
+import Block from 'slate/lib/models/block'
+import Character from 'slate/lib/models/character'
+import Document from 'slate/lib/models/document'
+import Inline from 'slate/lib/models/inline'
+import Mark from 'slate/lib/models/mark'
+import Selection from 'slate/lib/models/selection'
+import State from 'slate/lib/models/state'
+import Text from 'slate/lib/models/text'
 interface RawSerializeOptions{
     terse:boolean
 }
 export const Raw = {
-
     /**
      * Deserialize a JSON `object`.
      *

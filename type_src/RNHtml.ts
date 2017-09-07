@@ -4,9 +4,7 @@ let StringRecord = new immutable.Record({
     kind: 'string',
     text: ''
 });
-
 let key = 0;
-
 function addKey(element) {
     return React.cloneElement(element, {key: key++});
 }

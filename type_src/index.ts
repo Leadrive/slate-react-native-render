@@ -1,2 +1,4 @@
-import {RNHtml} from './RNHtml'
-import {Raw} from './Raw'
+export * from "./Raw";
+
+export * from "./RNHtml";
+
