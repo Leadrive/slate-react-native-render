@@ -3,23 +3,27 @@ import Character from 'slate/lib/models/character'
 import Document from 'slate/lib/models/document'
 import Inline from 'slate/lib/models/inline'
 import Mark from 'slate/lib/models/mark'
+import Node from 'slate/lib/models/node'
 import Selection from 'slate/lib/models/selection'
 import State from 'slate/lib/models/state'
 import Text from 'slate/lib/models/text'
 interface RawSerializeOptions{
     terse:boolean
 }
+
 export const Raw = {
+
     /**
      * Deserialize a JSON `object`.
      *
      * @param {Object} object
      * @param {Object} options (optional)
-     * @return {Block}
+     * @return {State}
      */
 
     deserialize(object, options) {
-        return Raw.deserializeState(object, options)
+        const state = Raw.deserializeState(object, options)
+        return state
     },
 
     /**
@@ -30,17 +34,19 @@ export const Raw = {
      * @return {Block}
      */
 
-    deserializeBlock(object, options:RawSerializeOptions = {} as RawSerializeOptions) {
-        if (options.terse) object = Raw.untersifyBlock(object);
-        return Block.create({
+    deserializeBlock(object, options = {} as RawSerializeOptions) {
+        if (options.terse) object = Raw.untersifyBlock(object)
+
+        const nodes = Node.createList(object.nodes.map(node => Raw.deserializeNode(node, options)))
+        const block = Block.create({
             key: object.key,
             type: object.type,
             data: object.data,
             isVoid: object.isVoid,
-            nodes: Block.createList(object.nodes.map((node) => {
-                return Raw.deserializeNode(node, options)
-            }))
+            nodes,
         })
+
+        return block
     },
 
     /**
@@ -52,13 +58,14 @@ export const Raw = {
      */
 
     deserializeDocument(object, options) {
-        return Document.create({
+        const nodes = object.nodes.map(node => Raw.deserializeNode(node, options))
+        const document = Document.create({
             key: object.key,
             data: object.data,
-            nodes: Block.createList(object.nodes.map((node) => {
-                return Raw.deserializeNode(node, options)
-            }))
+            nodes,
         })
+
+        return document
     },
 
     /**
@@ -69,18 +76,19 @@ export const Raw = {
      * @return {Inline}
      */
 
-    deserializeInline(object, options:RawSerializeOptions = {} as RawSerializeOptions) {
+    deserializeInline(object, options = {} as RawSerializeOptions) {
         if (options.terse) object = Raw.untersifyInline(object)
 
-        return Inline.create({
+        const nodes = object.nodes.map(node => Raw.deserializeNode(node, options))
+        const inline = Inline.create({
             key: object.key,
             type: object.type,
             data: object.data,
             isVoid: object.isVoid,
-            nodes: Inline.createList(object.nodes.map((node) => {
-                return Raw.deserializeNode(node, options)
-            }))
+            nodes,
         })
+
+        return inline
     },
 
     /**
@@ -92,7 +100,8 @@ export const Raw = {
      */
 
     deserializeMark(object, options) {
-        return Mark.create(object)
+        const mark = Mark.create(object)
+        return mark
     },
 
     /**
@@ -123,21 +132,12 @@ export const Raw = {
      * @return {List<Character>}
      */
 
-    deserializeRange(object, options:RawSerializeOptions = {} as RawSerializeOptions) {
+    deserializeRange(object, options = {} as RawSerializeOptions) {
         if (options.terse) object = Raw.untersifyRange(object)
-
-        const marks = Mark.createSet(object.marks.map((mark) => {
-            return Raw.deserializeMark(mark, options)
-        }))
-
-        return Character.createList(object.text
-            .split('')
-            .map((char) => {
-                return Character.create({
-                    text: char,
-                    marks,
-                })
-            }))
+        const marks = Mark.createSet(object.marks.map(mark => Raw.deserializeMark(mark, options)))
+        const chars = object.text.split('')
+        const characters = Character.createList(chars.map(text => ({ text, marks })))
+        return characters
     },
 
     /**
@@ -148,14 +148,16 @@ export const Raw = {
      * @return {State}
      */
 
-    deserializeSelection(object, options = {}) {
-        return Selection.create({
+    deserializeSelection(object, options = {} as RawSerializeOptions) {
+        const selection = Selection.create({
             anchorKey: object.anchorKey,
             anchorOffset: object.anchorOffset,
             focusKey: object.focusKey,
             focusOffset: object.focusOffset,
             isFocused: object.isFocused,
         })
+
+        return selection
     },
 
     /**
@@ -166,7 +168,7 @@ export const Raw = {
      * @return {State}
      */
 
-    deserializeState(object, options:RawSerializeOptions = {} as RawSerializeOptions) {
+    deserializeState(object, options = {} as RawSerializeOptions) {
         if (options.terse) object = Raw.untersifyState(object)
 
         const document = Raw.deserializeDocument(object.document, options)
@@ -187,16 +189,21 @@ export const Raw = {
      * @return {Text}
      */
 
-    deserializeText(object, options:RawSerializeOptions = {} as RawSerializeOptions) {
+    deserializeText(object, options = {} as RawSerializeOptions) {
         if (options.terse) object = Raw.untersifyText(object)
 
-        return Text.create({
+        const characters = object.ranges.reduce((list, range) => {
+            return list.concat(Raw.deserializeRange(range, options))
+        }, Character.createList())
+
+        const text = Text.create({
             key: object.key,
-            characters: object.ranges.reduce((characters, range) => {
-                return characters.concat(Raw.deserializeRange(range, options))
-            }, Character.createList())
+            characters,
         })
+
+        return text
     },
+
 
     untersifyBlock(object) {
         if (object.isVoid || !object.nodes || !object.nodes.length) {
