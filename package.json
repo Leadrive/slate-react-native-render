@@ -6,7 +6,7 @@
   },
   "dependencies": {
     "react": "^15.6.1",
-    "slate": "^0.22.8"
+    "slate": "^0.24.0"
   },
   "description": "use \"react\" in babelr otherwise the compiler gives errors.",
   "keywords": [

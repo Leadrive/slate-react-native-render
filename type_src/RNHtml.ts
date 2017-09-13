@@ -35,7 +35,7 @@ export class RNHtml{
         return elements
     }
 
-    serializeNode = (node)=> {
+    private serializeNode = (node)=> {
         if (node.kind == 'text') {
             let ranges = node.getRanges();
             return ranges.map(this.serializeRange);
@@ -53,7 +53,7 @@ export class RNHtml{
         throw new Error('No serializer defined for node of type "' + node.type + '".');
     };
 
-    serializeRange = (range)=>{
+    private serializeRange = (range)=>{
         let string = new StringRecord({text: range.text});
         let text = this.serializeString(string);
         return range.marks.reduce( (children, mark)=> {
