@@ -12,7 +12,6 @@ Example:
      const editorStateObj = {"document":{"data":{},"kind":"document","nodes":[{"data":{},"kind":"block","isVoid":false,"type":"numbered-list","nodes":[{"data":{},"kind":"block","isVoid":false,"type":"list-item","nodes":[{"kind":"text","ranges":[{"kind":"range","text":"gdfgdffgdfdgfdg","marks":[]}]}]},{"data":{},"kind":"block","isVoid":false,"type":"list-item","nodes":[{"kind":"text","ranges":[{"kind":"range","text":"gfdgfdgfddfggdffdg","marks":[]}]}]}]}]},"kind":"state"}
      const rules = [
        {
-         // Add a serializing function property to our rule...
          serialize(object, children) {
            if (object.kind == 'block' && object.type == 'paragraph') {
              return &lt;Text&gt;{children}&lt;/Text&gt;
