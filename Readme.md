@@ -6,8 +6,7 @@ Example:
 
 <pre>
     <div class="container">
-     import {RNHtml} from "../src/RNHtml";
-     import {Raw} from '../src/Raw'
+     import {RNHtml} from "slate-react-native-render";
      import {Text} from 'react-native'
 
      const editorStateObj = {"document":{"data":{},"kind":"document","nodes":[{"data":{},"kind":"block","isVoid":false,"type":"numbered-list","nodes":[{"data":{},"kind":"block","isVoid":false,"type":"list-item","nodes":[{"kind":"text","ranges":[{"kind":"range","text":"gdfgdffgdfdgfdg","marks":[]}]}]},{"data":{},"kind":"block","isVoid":false,"type":"list-item","nodes":[{"kind":"text","ranges":[{"kind":"range","text":"gfdgfdgfddfggdffdg","marks":[]}]}]}]}]},"kind":"state"}
@@ -25,7 +24,7 @@ Example:
 
      export class RichTextComponent extends React.Component {
          public render() {
-             let editorState = Raw.deserialize(JSON.parse(editorStateObj), {terse: true});
+             let editorState = State.fromJSON(JSON.parse(editorStateObj));
              let views = htmlSerializer.serialize(editorState);
              return  <View> {comment}</View>
          }
